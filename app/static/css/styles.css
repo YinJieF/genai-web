@@ -335,6 +335,144 @@ th {
   border-style: solid;
   border-width: 0;
 }
+/* Night mode styles for body and general UI elements */
+body.night-mode {
+  background-color: #333; /* Dark grey background */
+  color: white;
+}
+
+.night-mode .card, 
+.night-mode .navbar{
+  background-color: #444; /* Darker grey for UI elements */
+  color: white;
+}
+
+.night-mode .border-dark,
+.night-mode .border-grey {
+  border-color: #555 !important; /* Adjust border colors */
+}
+
+.night-mode .navbar {
+  background-color: #222 !important; /* Darker navbar */
+}
+
+.night-mode .demo-card {
+  background-color: #444; /* Card background */
+}
+
+.night-mode .demo-card:hover {
+  background-color: #555; /* Hover effect for cards */
+}
+
+/* Night mode styles for tables */
+.night-mode .table {
+  background-color: #555; /* Darker background for tables */
+  color: white;
+}
+
+.night-mode .table th,
+.night-mode .table td {
+  border-color: #666; /* Darker borders for table cells */
+  border-color: #666; /* Darker borders for table cells */
+  color: white; /* White text color */
+}
+/* Hover effect for table rows */
+.night-mode .table tbody tr:hover {
+  background-color: #666; /* Darker background on hover */
+  color: white;
+}
+/* Alternate row colors for better readability */
+.night-mode .table tbody tr:nth-child(odd) {
+  background-color: #555; /* Slightly lighter for odd rows */
+}
+
+.night-mode .table tbody tr:nth-child(even) {
+  background-color: #444; /* Slightly darker for even rows */
+}
+/* More specific targeting for DataTables in night mode */
+body.night-mode .dataTables_wrapper .dataTable {
+  background-color: #444 !important; /* Enforce background color */
+  color: white !important; /* Enforce text color */
+}
+
+body.night-mode .dataTables_wrapper .dataTable th,
+body.night-mode .dataTables_wrapper .dataTable td {
+  border-color: #666 !important; /* Enforce border color */
+  color: white !important; /* Enforce cell text color */
+}
+
+body.night-mode .dataTables_wrapper .dataTable tbody tr:nth-child(odd) {
+  background-color: #555 !important; /* Enforce alternate row color */
+}
+
+body.night-mode .dataTables_wrapper .dataTable tbody tr:nth-child(even) {
+  background-color: #444 !important; /* Enforce alternate row color */
+}
+
+body.night-mode .dataTables_wrapper .dataTable tbody tr:hover {
+  background-color: #666 !important; /* Enforce hover effect */
+  color: white !important;
+}
+
+body.night-mode .dataTables_wrapper .dataTable a {
+  color: #1e90ff !important; /* Enforce link color */
+}
+
+body.night-mode .dataTables_wrapper .dataTable a:hover {
+  color: #1c86ee !important; /* Enforce link hover effect */
+}
+/* Apply this CSS to your checkboxes in night mode */
+body.night-mode .row-checkbox {
+  accent-color: #1e90ff; /* Bright blue color for checkbox */
+  background-color: #444; /* Background color to match night mode */
+  border: 1px solid #888; /* Subtle border to define the checkbox */
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.7), /* Bright outer glow */
+              0 0 10px rgba(30, 144, 255, 0.5); /* Slightly diffused inner glow */
+}
+
+/* Style the checked state */
+body.night-mode .row-checkbox:checked {
+  accent-color: #1e90ff;
+  background-color: #1e90ff; /* Background color for checked state */
+  border: 1px solid #1e90ff;
+  box-shadow: 0 0 8px rgba(30, 144, 255, 0.9), /* Stronger glow when checked */
+              0 0 15px rgba(30, 144, 255, 0.6);
+}
+
+/* Ensure that checkbox retains the glossy effect even when focused */
+body.night-mode .row-checkbox:focus {
+  outline: none; /* Remove the default outline */
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.7), 
+              0 0 10px rgba(30, 144, 255, 0.5), 
+              0 0 12px rgba(255, 255, 255, 0.3); /* Add a slight white glow */
+}
+
+/* Hover effect for table rows */
+.night-mode .table tbody tr:hover {
+  background-color: #666; /* Darker background on hover */
+  color: white;
+}
+/* Link color adjustments for better visibility */
+.night-mode a {
+  color: #1e90ff; /* Brighter blue for links */
+}
+
+.night-mode a:hover {
+  color: #1c86ee; /* Slightly darker on hover */
+}
+/* Ensure that checkbox colors are visible in night mode */
+.night-mode .row-checkbox {
+  accent-color: #888; /* Grey color for checkbox */
+}
+
+/* Styling for selected rows (if applicable) */
+.night-mode .table tbody tr.selected {
+  background-color: #444; /* Different color for selected rows */
+  color: white;
+}
+.night-mode .row-checkbox {
+  accent-color: #888; /* Grey color for checkbox */
+}
 
 label {
   display: inline-block;
