@@ -8,3 +8,4 @@ numpy
 pandas
 tabulate
 db-dtypes
+vertex-ai
