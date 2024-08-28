@@ -1,4 +1,5 @@
 from vertexai.preview.language_models import TextEmbeddingModel, TextEmbeddingInput
+from scipy.spatial.distance import cosine
 from google.cloud import bigquery
 
 def embed_text(input_texts, model_name="textembedding-gecko@003", task="RETRIEVAL_DOCUMENT"):
@@ -46,7 +47,9 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     result_dict = dict()
     result_dict['identical'] = []
     result_dict['top_5_similar'] = []
+
     for result in results:    
+        result['distance'] = 100 - eval(result['distance'])
         result_dict['top_5_similar'].append({'jlr_link': result['base']['JLR_LINK'], 
                                        'crime': result['base']['TRANS_TYPE_OF_CASE'],
                                        'name': result['base']['name_llm_llama'], 
