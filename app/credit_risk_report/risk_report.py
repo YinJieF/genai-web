@@ -17,7 +17,7 @@ def get_risk_report(name, jlr_link):
     #Send the request to the Flask server
     print('Generating...')
     try:
-        response = requests.post('http://10.140.1.75:5000/chat', json=payload)
+        response = requests.post('http://10.140.1.79:5000/chat', json=payload)
         response.raise_for_status()  # Raise an exception for HTTP errors
         result = response.json().get('response', 'No result found')
         print(result)
