@@ -9,3 +9,4 @@ pandas
 tabulate
 db-dtypes
 vertexai
+scipy
