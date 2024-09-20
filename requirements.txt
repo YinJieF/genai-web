@@ -10,3 +10,4 @@ tabulate
 db-dtypes
 vertexai
 scipy
+gunicorn
