@@ -1,0 +1,20 @@
+# Use the official lightweight Python image.
+FROM python:3.9-slim
+
+# Set environment variables to prevent Python from writing pyc files and to buffer stdout and stderr.
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set work directory
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Copy project
+COPY . .
+
+# Command to run the app using gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "main:app"]
