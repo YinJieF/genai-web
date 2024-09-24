@@ -49,7 +49,8 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     result_dict['top_5_similar'] = []
 
     for result in results:    
-        result['distance'] = 100 - eval(result['distance'])
+        result['distance'] = ((100 - eval(result['distance'])) -95) / (100-95) #9/24/2024
+        
         result_dict['top_5_similar'].append({'jlr_link': result['base']['JLR_LINK'], 
                                        'crime': result['base']['TRANS_TYPE_OF_CASE'],
                                        'name': result['base']['name_llm_llama'], 
