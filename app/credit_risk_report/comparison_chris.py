@@ -25,39 +25,37 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     client = bigquery.Client()
     project_id = 'cdcda-lab-377808'
     dataset_id = 'EDEP'
-    table_id = 'Criminal_GRAY_Vector_20240815'
+    table_id = 'Black_Vector_1112'
     
     name_vector = embed_text(input_name)
     gender_vector = embed_text(input_gender)
-    addres_vector = embed_text(input_address)
+    address_vector = embed_text(input_address)
     birthday_vector = embed_text(input_birthday)
-    addition_vector = name_vector+gender_vector+addres_vector+birthday_vector
+    addition_vector = [sum(x) for x in zip(*[name_vector, gender_vector, address_vector, birthday_vector])]
     # Construct the SQL query
     query = f"""
     SELECT *
     FROM VECTOR_SEARCH(
-      (SELECT * FROM `{project_id}.{dataset_id}.{table_id}` WHERE TRANS_TYPE_OF_CASE = '{TRANS_TYPE_OF_CASE}'), 'addition_vector',
+      (SELECT * FROM `{project_id}.{dataset_id}.{table_id}` WHERE TRANS_TYPE_OF_CASE = '{TRANS_TYPE_OF_CASE}'), 'embeddings',
       (SELECT {addition_vector} AS embed), top_k => {top_k}, distance_type => '{distance_type}')
     """
     # Run the query
     query_job = client.query(query)
     # Fetch results
-    results = query_job.result()
+    results = query_job.result() # results = {'query':{'embed':[vector]}, 'base':{table columns}, 'distance': distance}
     # Convert results to a list of dictionaries
     result_dict = dict()
     result_dict['identical'] = []
     result_dict['top_5_similar'] = []
-
-    for result in results:    
-        result['distance'] = ((100 - eval(result['distance'])) -95) / (100-95) #9/24/2024
-        
+    for result in results: 
+        print(result['distance'])
         result_dict['top_5_similar'].append({'jlr_link': result['base']['JLR_LINK'], 
                                        'crime': result['base']['TRANS_TYPE_OF_CASE'],
                                        'name': result['base']['name_llm_llama'], 
                                        'full_address': result['base']['address_llm_llama'],
                                        'gender': result['base']['gender_llm_llama'], 
                                        'birthdate': result['base']['birthday_llm_llama'],
-                                       'total_similarity': result['distance']
+                                       'total_similarity': ((100 - float(result['distance'])) - 37.55) / (38.05008904815838 - 37.55) * 100 # ((100 - distance) - min) / (max - min)
                                       })
     # Sort 'top_5_similar' by 'total_similarity' in descending order
     result_dict['top_5_similar'].sort(key=lambda x: x['total_similarity'], reverse=True)
@@ -66,4 +64,5 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     if result_dict['top_5_similar']:
         highest_similarity_person = result_dict['top_5_similar'][0]  # Get the person with the highest similarity
         result_dict['identical'].append(highest_similarity_person)
+    
     return result_dict
