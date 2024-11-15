@@ -11,7 +11,7 @@ def get_risk_report(name, jlr_link):
     # Prepare the request payload
     payload = {
         'prompt_text': prompt_text,
-        'input_text': judgement_pdf[:6000]
+        'input_text': judgement_pdf[:10000]
     }
     print(len(judgement_pdf))
     #Send the request to the Flask server
