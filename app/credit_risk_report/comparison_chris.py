@@ -25,7 +25,7 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     client = bigquery.Client()
     project_id = 'cdcda-lab-377808'
     dataset_id = 'EDEP'
-    table_id = 'Black_Vector_1112'
+    table_id = 'Black_Vector_1115'
     
     name_vector = embed_text(input_name)
     gender_vector = embed_text(input_gender)
