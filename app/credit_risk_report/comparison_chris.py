@@ -2,7 +2,7 @@ from vertexai.preview.language_models import TextEmbeddingModel, TextEmbeddingIn
 from scipy.spatial.distance import cosine
 from google.cloud import bigquery
 
-def embed_text(input_texts, model_name="textembedding-gecko@003", task="RETRIEVAL_DOCUMENT"):
+def embed_text(input_texts, weight, model_name="text-multilingual-embedding-002"):
     """
     將輸入的文字列表轉換為向量。
 
@@ -18,19 +18,19 @@ def embed_text(input_texts, model_name="textembedding-gecko@003", task="RETRIEVA
     #inputs = [TextEmbeddingInput(text, task) for text in input_texts]
     embeddings = model.get_embeddings([input_texts])
     # 返回嵌入向量列表
-    return embeddings[0].values
+    return [x * weight for x in list(embeddings[0].values)]
 
-def vector_search(input_name, input_gender, input_address, input_birthday,top_k = 5, distance_type = 'EUCLIDEAN',TRANS_TYPE_OF_CASE = '刑事'):
+def vector_search(input_name, input_gender, input_address, input_birthday,top_k = 5, distance_type = 'COSINE',TRANS_TYPE_OF_CASE = '刑事'):
     
     client = bigquery.Client()
     project_id = 'cdcda-lab-377808'
     dataset_id = 'EDEP'
-    table_id = 'Black_Vector_1115'
+    table_id = 'Black_Vector_FINAL'
     
-    name_vector = embed_text(input_name)
-    gender_vector = embed_text(input_gender)
-    address_vector = embed_text(input_address)
-    birthday_vector = embed_text(input_birthday)
+    name_vector = embed_text(input_name, weight = 1000)
+    gender_vector = embed_text(input_gender, weight = 100)
+    address_vector = embed_text(input_address, weight =300)
+    birthday_vector = embed_text(input_birthday, weight =500)
     addition_vector = [sum(x) for x in zip(*[name_vector, gender_vector, address_vector, birthday_vector])]
     # Construct the SQL query
     query = f"""
@@ -48,14 +48,14 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     result_dict['identical'] = []
     result_dict['top_5_similar'] = []
     for result in results: 
-        print(result['distance'])
+        #print(result['distance'])
         result_dict['top_5_similar'].append({'jlr_link': result['base']['JLR_LINK'], 
                                        'crime': result['base']['TRANS_TYPE_OF_CASE'],
                                        'name': result['base']['name_llm_llama'], 
                                        'full_address': result['base']['address_llm_llama'],
                                        'gender': result['base']['gender_llm_llama'], 
                                        'birthdate': result['base']['birthday_llm_llama'],
-                                       'total_similarity': ((100 - float(result['distance'])) - 37.55) / (38.05008904815838 - 37.55) * 100 # ((100 - distance) - min) / (max - min)
+                                       'total_similarity': (((1 - result['distance']) * 100 - 85) / (100 -85)) * 100
                                       })
     # Sort 'top_5_similar' by 'total_similarity' in descending order
     result_dict['top_5_similar'].sort(key=lambda x: x['total_similarity'], reverse=True)
