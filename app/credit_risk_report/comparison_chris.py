@@ -25,7 +25,7 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
     client = bigquery.Client()
     project_id = 'cdcda-lab-377808'
     dataset_id = 'EDEP'
-    table_id = 'Black_Vector_FINAL'
+    table_id = 'Black_Vector_1115'
     
     name_vector = embed_text(input_name, weight = 1000)
     gender_vector = embed_text(input_gender, weight = 100)
@@ -55,7 +55,7 @@ def vector_search(input_name, input_gender, input_address, input_birthday,top_k 
                                        'full_address': result['base']['address_llm_llama'],
                                        'gender': result['base']['gender_llm_llama'], 
                                        'birthdate': result['base']['birthday_llm_llama'],
-                                       'total_similarity': (((1 - result['distance']) * 100 - 85) / (100 -85)) * 100
+                                       'total_similarity': 100 - (result['distance'] * 100)#(((1 - result['distance']) * 100 - 85) / (100 -85)) * 100
                                       })
     # Sort 'top_5_similar' by 'total_similarity' in descending order
     result_dict['top_5_similar'].sort(key=lambda x: x['total_similarity'], reverse=True)
