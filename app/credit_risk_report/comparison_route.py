@@ -8,7 +8,8 @@ def compare_route():
         gender = data.get('personGender')
         address = data.get('personAddress')
         birthdate = data.get('personBirthdate')
-        result = vector_search(name, gender, address, birthdate)
+        formatted_birthdate = birthdate.replace('-', '/')
+        result = vector_search(name, gender, address, formatted_birthdate)
 
         identical_result, similar_result = result['identical'], result['top_5_similar']
         # Return dataset shape and head as JSON
