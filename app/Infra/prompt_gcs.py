@@ -16,7 +16,7 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
     print(f"Downloaded storage object {source_blob_name} from bucket {bucket_name} to local file {destination_file_name}.")
 
 # Replace these variables with your bucket name and file details
-bucket_name = 'cdcda_sam'
+bucket_name = 'bucket_name'
 source_blob_name = 'prompt/prompt_text.txt'
 destination_file_name = 'prompt_text.txt'
 
