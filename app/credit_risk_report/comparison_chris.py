@@ -23,9 +23,9 @@ def embed_text(input_texts, weight, model_name="text-multilingual-embedding-002"
 def vector_search(input_name, input_gender, input_address, input_birthday,top_k = 5, distance_type = 'COSINE',TRANS_TYPE_OF_CASE = '刑事'):
     
     client = bigquery.Client()
-    project_id = 'cdcda-lab-377808'
-    dataset_id = 'EDEP'
-    table_id = 'Black_Vector_1115'
+    project_id = 'PROJECT_ID'
+    dataset_id = 'DATASET_ID'
+    table_id = 'TABLE_ID'
     
     name_vector = embed_text(input_name, weight = 1000)
     gender_vector = embed_text(input_gender, weight = 100)
