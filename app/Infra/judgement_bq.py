@@ -6,7 +6,7 @@ def query_for_pdf(jlr_link):
     
     query = f"""
         SELECT PDF_CONTENT
-        FROM `cdcda-lab-377808.EDEP.jlr_decision_report_llama_full_0807`
+        FROM `PROJECT_ID.DATASET_ID.TABLE_ID`
         WHERE CASE_LINK = '{jlr_link}'
     """
     try:
